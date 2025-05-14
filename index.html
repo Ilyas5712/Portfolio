@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Ilyas | Cyber Security & Web Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
+        
+        :root {
+            --neon-blue: #00f7ff;
+            --neon-purple: #bd00ff;
+            --neon-cyan: #00ffcc;
+            --dark-bg: #0a0a12;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .neon-text-blue {
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            color: var(--neon-blue);
+        }
+        
+        .neon-text-purple {
+            text-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+            color: var(--neon-purple);
+        }
+        
+        .neon-text-cyan {
+            text-shadow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+        
+        .neon-border-blue {
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue), inset 0 0 10px var(--neon-blue);
+        }
+        
+        .neon-border-purple {
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple), inset 0 0 10px var(--neon-purple);
+        }
+        
+        .neon-border-cyan {
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan), inset 0 0 10px var(--neon-cyan);
+        }
+        
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 24px;
+            background: var(--neon-blue);
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 30px rgba(0, 247, 255, 0.2);
+        }
+        
+        .skill-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            border-radius: 3px;
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            overflow: hidden;
+        }
+        
+        .code-line {
+            color: var(--neon-cyan);
+            font-family: monospace;
+            position: absolute;
+            user-select: none;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Code Rain Background -->
+    <div class="code-rain" id="codeRain"></div>
+    
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black bg-opacity-80 backdrop-filter backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold neon-text-blue">ILYAS</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="neon-text-blue px-3 py-2 rounded-md text-sm font-medium hover:neon-border-blue transition-all">Home</a>
+                        <a href="#about" class="text-gray-300 hover:neon-text-blue px-3 py-2 rounded-md text-sm font-medium transition-all">About</a>
+                        <a href="#skills" class="text-gray-300 hover:neon-text-blue px-3 py-2 rounded-md text-sm font-medium transition-all">Skills</a>
+                        <a href="#projects" class="text-gray-300 hover:neon-text-blue px-3 py-2 rounded-md text-sm font-medium transition-all">Projects</a>
+                        <a href="#contact" class="text-gray-300 hover:neon-text-blue px-3 py-2 rounded-md text-sm font-medium transition-all">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden bg-black bg-opacity-90" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="neon-text-blue block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="text-gray-300 hover:neon-text-blue block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#skills" class="text-gray-300 hover:neon-text-blue block px-3 py-2 rounded-md text-base font-medium">Skills</a>
+                <a href="#projects" class="text-gray-300 hover:neon-text-blue block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#contact" class="text-gray-300 hover:neon-text-blue block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+            <div class="text-center">
+                <div class="w-40 h-40 mx-auto mb-8 rounded-full neon-border-blue overflow-hidden">
+                    <img src="https://i.ibb.co/Z1N4XF7Q/1.jpg" alt="Muhammad Ilyas" class="w-full h-full object-cover">
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <span class="neon-text-blue">Muhammad</span> <span class="neon-text-purple">Ilyas</span>
+                </h1>
+                <div class="text-xl md:text-3xl mb-8 h-10">
+                    <span id="typing-text" class="neon-text-cyan"></span><span class="typing-cursor"></span>
+                </div>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto neon-text-blue">"Building secure futures, one line at a time."</p>
+                <div class="mt-12 flex justify-center space-x-6">
+                    <a href="#projects" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/50">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-1/4 left-1/4 w-8 h-8 rounded-full bg-blue-500 opacity-30 floating" style="animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 right-1/4 w-12 h-12 rounded-full bg-purple-500 opacity-30 floating" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-10 h-10 rounded-full bg-cyan-500 opacity-30 floating" style="animation-delay: 2s;"></div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center neon-text-purple">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 relative">
+                    <div class="w-full h-80 md:h-96 neon-border-cyan rounded-lg overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="About" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 neon-border-blue rounded-full bg-black bg-opacity-80 flex items-center justify-center">
+                        <span class="text-4xl neon-text-blue">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="md:w-2/3">
+                    <p class="text-lg md:text-xl leading-relaxed mb-6">
+                        I'm <span class="neon-text-blue">Muhammad Ilyas</span> — a passionate builder of secure digital worlds. With a deep focus on both the defensive and development sides of the tech stack, I specialize in creating responsive, high-performance web solutions while fortifying systems against modern threats.
+                    </p>
+                    <p class="text-lg md:text-xl leading-relaxed mb-6">
+                        From full-stack code to cybersecurity protocols, I merge design, development, and digital defense to create robust solutions that stand the test of time and threats.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                        <div class="text-center p-4 neon-border-blue rounded-lg">
+                            <div class="text-3xl neon-text-blue mb-2">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="font-bold">Security</h3>
+                            <p class="text-sm">Protocols & Defense</p>
+                        </div>
+                        <div class="text-center p-4 neon-border-purple rounded-lg">
+                            <div class="text-3xl neon-text-purple mb-2">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="font-bold">Development</h3>
+                            <p class="text-sm">Full Stack Solutions</p>
+                        </div>
+                        <div class="text-center p-4 neon-border-cyan rounded-lg">
+                            <div class="text-3xl neon-text-cyan mb-2">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3 class="font-bold">Design</h3>
+                            <p class="text-sm">UI/UX Focus</p>
+                        </div>
+                        <div class="text-center p-4 neon-border-blue rounded-lg">
+                            <div class="text-3xl neon-text-blue mb-2">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="font-bold">Marketing</h3>
+                            <p class="text-sm">Digital Strategies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-black bg-opacity-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center neon-text-cyan">My Skills</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Development Skills -->
+                <div class="p-8 neon-border-blue rounded-xl bg-black bg-opacity-30">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl neon-text-blue mr-4">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Development</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>HTML/CSS</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>JavaScript</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>React</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Node.js</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cybersecurity Skills -->
+                <div class="p-8 neon-border-purple rounded-xl bg-black bg-opacity-30">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl neon-text-purple mr-4">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Cybersecurity</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Security Protocols</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Threat Mitigation</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Penetration Testing</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Encryption</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Software Tools -->
+                <div class="p-8 neon-border-cyan rounded-xl bg-black bg-opacity-30">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl neon-text-cyan mr-4">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Software Tools</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>MS Office</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Filmora</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Adobe Suite</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>VS Code</span>
+                                <span>98%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 98%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Marketing Skills -->
+                <div class="p-8 neon-border-blue rounded-xl bg-black bg-opacity-30">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl neon-text-blue mr-4">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Marketing</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Facebook Ads</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Digital Marketing</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>SEO</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Content Strategy</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center neon-text-purple">My Projects</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card neon-border-blue rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-blue-900 to-black flex items-center justify-center">
+                        <i class="fas fa-lock text-6xl neon-text-blue"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-blue">SecureLogin</h3>
+                        <p class="text-gray-300 mb-4">Encrypted user authentication system with multi-factor security protocols.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">Security</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">React</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card neon-border-purple rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-purple-900 to-black flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-6xl neon-text-purple"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-purple">CyberTrack</h3>
+                        <p class="text-gray-300 mb-4">Real-time threat monitoring dashboard with analytics and alerts.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">Security</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">Dashboard</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card neon-border-cyan rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-cyan-900 to-black flex items-center justify-center">
+                        <i class="fas fa-blog text-6xl neon-text-cyan"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-cyan">IlyasBlog</h3>
+                        <p class="text-gray-300 mb-4">Personal blog platform with custom CMS and secure authentication.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">CMS</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">Blog</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">React</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card neon-border-blue rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-blue-900 to-black flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl neon-text-blue"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-blue">MarketMaster</h3>
+                        <p class="text-gray-300 mb-4">Advertising analytics dashboard with Facebook Ad integration.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">Marketing</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">Analytics</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card neon-border-purple rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-purple-900 to-black flex items-center justify-center">
+                        <i class="fas fa-film text-6xl neon-text-purple"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-purple">FilmoraFX</h3>
+                        <p class="text-gray-300 mb-4">Video editing UI concept with advanced timeline controls.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">UI Design</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">Video</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">Editing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card neon-border-cyan rounded-xl overflow-hidden bg-black bg-opacity-30">
+                    <div class="h-48 bg-gradient-to-br from-cyan-900 to-black flex items-center justify-center">
+                        <i class="fas fa-terminal text-6xl neon-text-cyan"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 neon-text-cyan">HackShield</h3>
+                        <p class="text-gray-300 mb-4">Penetration testing toolkit with vulnerability scanner.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-900 bg-opacity-50 text-blue-300">Security</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-purple-900 bg-opacity-50 text-purple-300">Testing</span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-cyan-900 bg-opacity-50 text-cyan-300">Tools</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/50">
+                    View All Projects
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black bg-opacity-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center neon-text-blue">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <div class="p-8 neon-border-purple rounded-xl bg-black bg-opacity-30 h-full">
+                        <h3 class="text-2xl font-bold mb-6 neon-text-purple">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="text-2xl neon-text-blue mr-4 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Email</h4>
+                                    <a href="mailto:khan97979798@gmail.com" class="text-gray-300 hover:neon-text-blue transition-all">khan97979798@gmail.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-2xl neon-text-purple mr-4 mt-1">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Phone</h4>
+                                    <a href="tel:+923197734820" class="text-gray-300 hover:neon-text-purple transition-all">+92 319 7734820</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-2xl neon-text-cyan mr-4 mt-1">
+                                    <i class="fab fa-instagram"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Instagram</h4>
+                                    <a href="https://instagram.com/khanilyas5712" target="_blank" class="text-gray-300 hover:neon-text-cyan transition-all">@khanilyas5712</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-2xl neon-text-blue mr-4 mt-1">
+                                    <i class="fab fa-github"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">GitHub</h4>
+                                    <a href="https://github.com/yourusername" target="_blank" class="text-gray-300 hover:neon-text-blue transition-all">github.com/yourusername</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold mb-4">Follow Me</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 rounded-full neon-border-blue flex items-center justify-center text-xl hover:bg-blue-900 hover:bg-opacity-30 transition-all">
+                                    <i class="fab fa-twitter neon-text-blue"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full neon-border-purple flex items-center justify-center text-xl hover:bg-purple-900 hover:bg-opacity-30 transition-all">
+                                    <i class="fab fa-linkedin-in neon-text-purple"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full neon-border-cyan flex items-center justify-center text-xl hover:bg-cyan-900 hover:bg-opacity-30 transition-all">
+                                    <i class="fab fa-facebook-f neon-text-cyan"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full neon-border-blue flex items-center justify-center text-xl hover:bg-blue-900 hover:bg-opacity-30 transition-all">
+                                    <i class="fab fa-youtube neon-text-blue"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="p-8 neon-border-cyan rounded-xl bg-black bg-opacity-30 h-full">
+                        <h3 class="text-2xl font-bold mb-6 neon-text-cyan">Send Me a Message</h3>
+                        
+                        <!-- FormSubmit Form (Working) -->
+                        <form action="https://formsubmit.co/mrunknown582a@gmail.com" method="POST" class="space-y-4">
+                            <!-- Prevent spam (honeypot) -->
+                            <input type="text" name="_honey" style="display: none">
+                            
+                            <!-- Disable captcha -->
+                            <input type="hidden" name="_captcha" value="false">
+                            
+                            <!-- Success redirect -->
+                            <input type="hidden" name="_next" value="https://huggingface.co/spaces/ilyas571/thanks">
+                            
+                            <!-- Form fields -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-1">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white" placeholder="Enter your name" required>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-1">Your Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white" placeholder="Enter your email" required>
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
+                                <input type="text" id="subject" name="subject" class="w-full px-4 py-2 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white" placeholder="Enter subject" required>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white" placeholder="Enter your message" required></textarea>
+                            </div>
+                            
+                            <div class="pt-2">
+                                <button type="submit" class="w-full px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-cyan-500/50">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 bg-black bg-opacity-80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold neon-text-blue">ILYAS</span>
+                    <p class="text-gray-400 text-sm mt-1">Building secure futures, one line at a time.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#home" class="text-gray-400 hover:neon-text-blue transition-all">Home</a>
+                    <a href="#about" class="text-gray-400 hover:neon-text-blue transition-all">About</a>
+                    <a href="#skills" class="text-gray-400 hover:neon-text-blue transition-all">Skills</a>
+                    <a href="#projects" class="text-gray-400 hover:neon-text-blue transition-all">Projects</a>
+                    <a href="#contact" class="text-gray-400 hover:neon-text-blue transition-all">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for animations -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Typing animation
+        const texts = ["Cyber Security Expert", "Web Developer", "Digital Marketer"];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            document.getElementById('typing-text').textContent = letter;
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); // Wait 2s before typing next
+            } else {
+                setTimeout(type, 150); // Typing speed
+            }
+        })();
+
+        // Floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size, position, and animation
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const animationDuration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.animation = `floating ${animationDuration}s ease-in-out infinite`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Code rain effect
+        function createCodeRain() {
+            const chars = "01";
+            const container = document.getElementById('codeRain');
+            
+            for (let i = 0; i < 50; i++) {
+                const codeLine = document.createElement('div');
+                codeLine.classList.add('code-line');
+                
+                // Random content
+                let content = "";
+                for (let j = 0; j < 30; j++) {
+                    content += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                
+                codeLine.textContent = content;
+                codeLine.style.left = `${Math.random() * 100}%`;
+                codeLine.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                codeLine.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(codeLine);
+            }
+        }
+
+        // Initialize effects
+        window.onload = function() {
+            createParticles();
+            createCodeRain();
+        };
+    </script>
+</body>
+</html>
